@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATC-24 Flight Plan Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>ATC-24 Flight Plan Generator</h1>
+    <form id="promptForm">
+        <label for="value1">Callsign:</label>
+        <input type="text" id="value1" name="value1" required>
+        <br>
+        <label for="value2">Aircraft:</label>
+        <select id="value2" name="value2" required>
+            <option value="" disabled selected>Select an option</option>
+
+            <option value="" disabled></option>
+            <option value="--+==+-- Commercial Aircraft --+==+--" disabled>--+==+-- Commercial Aircraft --+==+--</option>
+            <option value="" disabled></option>
+            <option value="--- ATR Aircraft ---" disabled>--- ATR Aircraft ---</option>
+            <option value="ATR 72-600">ATR 72-600</option>
+            <option value="--- Boeing Aircraft ---" disabled>--- Boeing Aircraft ---</option>
+            <option value="Boeing 727">Boeing 727</option>
+            <option value="Boeing 737">Boeing 737</option>
+            <option value="Boeing 747">Boeing 747</option>
+            <option value="Boeing 757">Boeing 757</option>
+            <option value="Boeing 767">Boeing 767</option>
+            <option value="Boeing 777">Boeing 777</option>
+            <option value="Boeing 787">Boeing 787</option>
+            <option value="--- Airbus Aircraft ---" disabled>--- Airbus Aircraft ---</option>
+            <option value="Airbus A220">Airbus A220</option>
+            <option value="Airbus A320">Airbus A320</option>
+            <option value="Airbus A330">Airbus A330</option>
+            <option value="Airbus A340">Airbus A340</option>
+            <option value="Airbus A350">Airbus A350</option>
+            <option value="Airbus A380">Airbus A380</option>
+            <option value="--- Aerospatiale Aircraft ---" disabled>--- Aerospatiale Aircraft ---</option>
+            <option value="Concorde">Concorde</option>
+            <option value="--- Bombardier Aircraft ---" disabled>--- Bombardier Aircraft ---</option>
+            <option value="Bombardier Learjet">Bombardier Learjet</option>
+            <option value="Bombardier CRJ700">Bombardier CRJ700</option>
+            <option value="Bombardier Q400">Bombardier Q400</option>
+            <option value="--- McDonnell Douglas Aircraft ---" disabled>--- McDonnell Douglas Aircraft ---</option>
+            <option value="McDonnell Douglas MD-11">McDonnell Douglas MD-11</option>
+            <option value="McDonnell Douglas MD-90">McDonnell Douglas MD-90</option>
+
+            <option value="" disabled></option>
+            <option value="--+==+-- Cargo Aircraft --+==+--" disabled>--+==+-- Cargo Aircraft --+==+--</option>
+            <option value="" disabled></option>
+            <option value="--- Boeing Aircraft ---" disabled>--- Boeing Aircraft ---</option>
+            <option value="Boeing DreamLifter">Boeing DreamLifter</option>
+            <option value="--- Airbus Aircraft ---" disabled>--- Airbus Aircraft ---</option>
+            <option value="Airbus Beluga">Airbus Beluga</option>
+            <option value="--- Antonov Aircraft ---" disabled>--- Antonov Aircraft ---</option>
+            <option value="Antonov AN-22">Antonov AN-22</option>
+            <option value="Antonov AN-225">Antonov AN-225</option>
+
+            <option value="" disabled></option>
+            <option value="--+==+-- Light Aircraft --+==+--" disabled>--+==+-- Light Aircraft --+==+--</option>
+            <option value="" disabled></option>
+            <option value="--- Cessna Aircraft ---" disabled>--- Cessna Aircraft ---</option>
+            <option value="Cessna 172">Cessna 172</option>
+            <option value="Cessna 182">Cessna 182</option>
+            <option value="Cessna Caravan">Cessna Caravan</option>
+            <option value="Cessna Caravan (Skydiving)">Cessna Caravan (Skydiving)</option>
+            <option value="Cessna 402">Cessna 402</option>
+            <option value="--- Piper Aircraft ---" disabled>--- Piper Aircraft ---</option>
+            <option value="Piper PA-28">Piper PA-28</option>
+            <option value="Piper Cub">Piper Cub</option>
+            <option value="Extra 300s">Extra 300s</option>
+            <option value="--- Cirrus Aircraft ---" disabled>--- Cirrus Aircraft ---</option>
+            <option value="Cirrus Vision SF50">Cirrus Vision SF50</option>
+            <option value="--- de Havilland Canada ---" disabled>--- de Havilland Canada Aircraft ---</option>
+            <option value="DHC-6 Twin Otter">DHC-6 Twin Otter</option>
+
+            <option value="" disabled></option>
+            <option value="--+==+-- Modern Military Aircraft --+==+--" disabled>--+==+-- Modern Military Aircraft --+==+--</option>
+            <option value="" disabled></option>
+            <option value="--- Grumman Aircraft ---" disabled>--- Grumman Aircraft ---</option>
+            <option value="F-14 Tomcat">F-14 Tomcat</option>
+            <option value="--- McDonnell Douglas Aircraft ---" disabled>--- McDonnell Douglas Aircraft ---</option>
+            <option value="McDonnell Douglas F-15E Strike Eagle">McDonnell Douglas F-15E Strike Eagle</option>
+            <option value="--- Lockheed Martin Aircraft ---" disabled>--- Lockheed Martin Aircraft ---</option>
+            <option value="F-16 Fighting Falcon">F-16 Fighting Falcon</option>
+            <option value="F-22 Raptor">F-22 Raptor</option>
+            <option value="F-35B">F-35B</option>
+            <option value="--- Boeing Aircraft ---" disabled>--- Boeing Aircraft ---</option>
+            <option value="F/A-18 Super Hornet">F/A-18 Super Hornet</option>
+            <option value="Boeing P-8 Poseidon">Boeing P-8 Poseidon</option>
+            <option value="--- Fairchild Aircraft ---" disabled>--- Fairchild Aircraft ---</option>
+            <option value="A-10 Warthog">A-10 Warthog</option>
+            <option value="--- Northrop Grumman Aircraft ---" disabled>--- Northrop Grumman Aircraft ---</option>
+            <option value="B-2 Spirit">B-2 Spirit</option>
+            <option value="--- Airbus Aircraft ---" disabled>--- Airbus Aircraft ---</option>
+            <option value="Eurofighter Typhoon">Eurofighter Typhoon</option>
+            <option value="--- Hawker Aircraft ---" disabled>--- Hawker Siddeley Aircraft ---</option>
+            <option value="Hawk T1">Hawk T1</option>
+            <option value="--- Sukhoi Aircraft ---" disabled>--- Sukhoi Aircraft ---</option>
+            <option value="Sukhoi Su-27">Sukhoi Su-27</option>
+
+            <option value="" disabled></option>
+            <option value="--+==+-- Old Military Aircraft --+==+--" disabled>--+==+-- Old Military Aircraft --+==+--</option>
+            <option value="" disabled></option>
+            <option value="--- North American Aviation Aircraft ---" disabled>--- North American Aviation Aircraft ---</option>
+            <option value="P-51 Mustang">P-51 Mustang</option>
+            <option value="--- Hawker Aircraft ---" disabled>--- Hawker Siddeley Aircraft ---</option>
+            <option value="Hurricane">Hurricane</option>
+            <option value="Avro Vulcan">Avro Vulcan</option>
+            <option value="Hawker Harrier">Hawker Harrier</option>
+            <option value="--- Vought Aircraft ---" disabled>--- Vought Aircraft ---</option>
+            <option value="F4U Corsair">F4U Corsair</option>
+            <option value="--- Mitsubishi Airplanes ---" disabled>--- Mitsubishi Airplanes ---</option>
+            <option value="A6M Zero">A6M Zero</option>
+            <option value="--- Fokker Aircraft ---" disabled>--- Fokker Aircraft ---</option>
+            <option value="Fokker Dr1">Fokker Dr1</option>
+            <option value="--- Mikoyan Aircraft ---" disabled>--- Mikoyan Aircraft ---</option>
+            <option value="MiG-15">MiG-15</option>
+            <option value="--- Lockheed Aircraft ---" disabled>--- Lockheed Aircraft ---</option>
+            <option value="P38 Lightning">P38 Lightning</option>
+            <option value="C-130 Hercules">C-130 Hercules</option>
+            <option value="SR-71 Blackbird">SR-71 Blackbird</option>
+            <option value="--- Boeing Aircraft ---" disabled>--- Boeing Aircraft ---</option>
+            <option value="B-29">B-29</option>
+            <option value="--- McDonnel Douglas ---" disabled>--- McDonnel Douglas ---</option>
+            <option value="F-4 Phantom">F-4 Phantom</option>
+            <option value="--- BAC Aircraft ---" disabled>--- BAC Aircraft ---</option>
+            <option value="English Electric Lightning">English Electric Lightning</option>
+            
+            <option value="" disabled></option>
+            <option value="--+==+-- Amphibious Aircraft --+==+--" disabled>--+==+-- Amphibious Aircraft --+==+--</option>
+            <option value="" disabled></option>
+            <option value="--- Cessna Aircraft ---" disabled>--- Cessna Aircraft ---</option>
+            <option value="Cessna 172">Cessna 172</option>
+            <option value="Cessna 182">Cessna 182</option>
+            <option value="Cessna Caravan">Cessna Caravan</option>
+            <option value="--- Piper Aircraft ---" disabled>--- Piper Aircraft ---</option>
+            <option value="Piper Cub">Piper Cub</option>
+            <option value="--- de Havilland Canada ---" disabled>--- de Havilland Canada Aircraft ---</option>
+            <option value="DHC-6 Twin Otter">DHC-6 Twin Otter</option>
+
+            <option value="" disabled></option>
+            <option value="--+==+-- Helecopters --+==+--" disabled>--+==+-- Helecopters --+==+--</option>
+            <option value="" disabled></option>
+            <option value="--- Bell Textron Aircraft ---" disabled>--- Bell Textron Aircraft ---</option>
+            <option value="Bell 412">Bell 412</option>
+            <option value="--- Boeing Aircraft ---" disabled>--- Boeing Aircraft ---</option>
+            <option value="Chinook">Chinook</option>
+            <option value="--- Sikorsky Aircraft ---" disabled>--- Sikorsky Aircraft ---</option>
+            <option value="UH-60 Black Hawk">UH-60 Black Hawk</option>
+            <option value="Sikorsky S-92">Sikorsky S-92</option>
+            <option value="--- Airbus Aircraft ---" disabled>--- Airbus Aircraft ---</option>
+            <option value="Airbus H135">Airbus H135</option>
+            <option value="--- Airbus Aircraft ---" disabled>--- Airbus Aircraft ---</option>
+            <option value="Airbus H135">Airbus H135</option>
+
+            <option value="" disabled></option>
+            <option value="--+==+-- Tanker Aircraft --+==+--" disabled>--+==+-- Tanker Aircraft --+==+--</option>
+            <option value="" disabled></option>
+            <option value="--- Boeing Aircraft ---" disabled>--- Boeing Aircraft ---</option>
+            <option value="KC-767">KC-767</option>
+            <option value="--- Lockheed Martain Aircraft ---" disabled>--- Lockheed Aircraft ---</option>
+            <option value="KC-130">KC-130</option>
+            <option value="--- Airbus Aircraft ---" disabled>--- Airbus Aircraft ---</option>
+            <option value="A330 MRTT">A330 MRTT</option>
+
+
+        </select>
+        <br>
+        <label for="value3">FlightRules:</label>
+        <select id="value3" name="value3" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="IFR">IFR</option>
+            <option value="VFR">VFR</option>
+        </select>
+        <br>
+        <label for="value4">Departing:</label>
+        <select id="value4" name="value4" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Greater Rockford">Greater Rockford</option>
+            <option value="Perth">Perth</option>
+            <option value="Izolirani">Izolirani</option>
+            <option value="Tokyo">Tokyo</option>
+            <option value="Larnaca">Larnaca</option>
+            <option value="McConnell AFB">McConnell AFB</option>
+            <option value="Grindavik">Grindavik</option>
+            <option value="Paphos">Paphos</option>
+            <option value="Sauthemptona">Sauthemptona</option>
+            <option value="Mellor">Mellor</option>
+            <option value="Saint Barthélemy">Saint Barthélemy</option>
+            <option value="Saba">Saba</option>
+            <option value="Training Centre">Training Centre</option>
+            <option value="Lukla">Lukla</option>
+            <option value="Al Najaf">Al Najaf</option>
+            <option value="Airbase Garry">Airbase Garry</option>
+            <option value="RAF Scampton">RAF Scampton</option>
+            <option value="Henstridge Airfield">Henstridge Airfield</option>
+            <option value="Skopelos">Skopelos</option>
+            <option value="Boltic Airfield">Boltic Airfield</option>
+            <option value="Barra">Barra</option>
+            <option value="Tavaro">Tavaro</option>
+            <option value="Waterloo">Waterloo</option>
+            <option value="Sea Haven">Sea Haven</option>
+        </select>
+        <br>
+        <label for="value5">Arriving:</label>
+        <select id="value5" name="value5" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="Greater Rockford">Greater Rockford</option>
+            <option value="Perth">Perth</option>
+            <option value="Izolirani">Izolirani</option>
+            <option value="Tokyo">Tokyo</option>
+            <option value="Larnaca">Larnaca</option>
+            <option value="McConnell AFB">McConnell AFB</option>
+            <option value="Grindavik">Grindavik</option>
+            <option value="Paphos">Paphos</option>
+            <option value="Sauthemptona">Sauthemptona</option>
+            <option value="Mellor">Mellor</option>
+            <option value="Saint Barthélemy">Saint Barthélemy</option>
+            <option value="Saba">Saba</option>
+            <option value="Training Centre">Training Centre</option>
+            <option value="Lukla">Lukla</option>
+            <option value="Al Najaf">Al Najaf</option>
+            <option value="Airbase Garry">Airbase Garry</option>
+            <option value="RAF Scampton">RAF Scampton</option>
+            <option value="Henstridge Airfield">Henstridge Airfield</option>
+            <option value="Skopelos">Skopelos</option>
+            <option value="Boltic Airfield">Boltic Airfield</option>
+            <option value="Barra">Barra</option>
+            <option value="Tavaro">Tavaro</option>
+            <option value="Waterloo">Waterloo</option>
+            <option value="Sea Haven">Sea Haven</option>
+        </select>
+        <br>
+        <label for="value6">Flight Level:</label>
+        <input type="text" id="value6" name="value6" required>
+        <br>
+        <label for="value7">Route:</label>
+        <input type="text" id="value7" name="value7" required>
+        <br>
+        <button type="submit">Generate Prompt</button>
+    </form>
+    <div id="result"></div>
+    <script>
+        document.getElementById('promptForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const value1 = document.getElementById('value1').value;
+            const value2 = document.getElementById('value2').value;
+            const value3 = document.getElementById('value3').value;
+            const value4 = document.getElementById('value4').value;
+            const value5 = document.getElementById('value5').value;
+            const value6 = document.getElementById('value6').value;
+            const value7 = document.getElementById('value7').value;
+
+            const prompt = `Here is your flight plan command: /createflightplan callsign:${value1} aircraft:${value2} flightrules:${value3} departing:${value4} arriving:${value5} flightlevel:${value6} route:${value7}.`;
+            
+            document.getElementById('result').textContent = prompt;
+        });
+    </script>
+</body>
+</html>
